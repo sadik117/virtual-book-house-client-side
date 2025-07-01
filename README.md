@@ -1,126 +1,137 @@
 📚 Virtual Book House
-
-🌐 Live Site
-
-https://virtual-book-house.netlify.app/
+🌐 Live Site:
+https://virtual-book-house.netlify.app
 
 🎯 Project Purpose
+Everyone keeps scattered lists of books they want to read, are currently reading, or have finished. Virtual Book House centralizes those lists into one interactive web app that:
 
-Everyone keeps scattered lists of books they want to read, are reading, or already finished. Virtual Bookshelf centralises those lists, turning them into an interactive shelf that:
+📘 Organizes and visualizes a user’s reading journey
 
-Organises and visualises a user’s reading journey.
+🗣️ Encourages discovery through reviews and upvotes
 
-Encourages discovery through reviews and up‑votes.
+📊 Motivates readers with progress tracking and category-based charts
 
-Motivates readers with a progress tracker and category charts.
-
-Save money from buying hardcopy expensive books
+💸 Helps users avoid expensive hardcopy books by sharing digital records
 
 ✨ Key Features
+Area	Highlights
+Authentication & Authorization	Firebase Email/Password & Google Sign-in. JWT-protected APIs and private routes.
+Bookshelf	Add books with cover, category & status → Search, filter, and up-vote others’ books.
+Reading Tracker	Update status Want-to-Read → Reading → Read (owner only). Visual tracker on book detail page.
+Reviews	One review per user per book. Edit/Delete your own reviews.
+My Books	Update or delete books you added. Confirmation with SweetAlert2.
+Charts	Pie chart in user profile summarizing books per category.
+Responsive UI	Mobile-first layout using Tailwind CSS + Framer Motion animations.
 
-Area
+🛠️ Tech Stack
+🔹 Front-End
+React 18
 
-Highlights
+Tailwind CSS + Autoprefixer
 
-Authentication
+React Router v6
 
-Authorization
+Framer Motion
 
-Email/password & Google sign‑in with Firebase. JWT‑protected APIs and private routes.
+Firebase v10
 
-Bookshelf
+React Toastify
 
-Add books with cover, category & status ➜ Search, filter by status, and up‑vote others’ books.
+SweetAlert2 + with-react-content
 
-Reading Tracker
+Lucide-react
 
-Update status Want‑to‑Read → Reading → Read (owner only). Visual tracker on book detail page.
+Axios
 
-Reviews
+🔸 Back-End
+Node.js v20
 
-One review per user per book. Edit/Delete own reviews.
+Express v5
 
-My Books
+MongoDB Atlas
 
-Update or delete only the books you added. Confirmation with SweetAlert2.
+Mongoose v8
 
-Charts
+jsonwebtoken (JWT)
 
-Pie chart on profile summarising books per category.
+cookie-parser
 
-Responsive UI
+dotenv
 
-React + Tailwind + Framer Motion animations, mobile‑first adaptive layout.
+cors
 
+🔑 Important NPM Packages
+Package	Purpose
+react-router-dom	Routing & protected routes
+axios	HTTP client with JWT interceptors
+framer-motion	Smooth animations and page transitions
+react-toastify	Toast notifications for actions (add, update, delete)
+sweetalert2	Elegant modal confirmations
+lucide-react	Clean and modern icon components
+firebase	User authentication and session handling
+jsonwebtoken	Issue and verify secure tokens
+express	Backend routing and middleware
+mongoose	MongoDB object modeling
+cors, dotenv, cookie-parser	Middleware for security and configuration
 
-🛠️ Tech Stack
+⚙️ How to Run Locally
+🔧 Prerequisites
+Node.js v18 or above
 
-Front‑End
+npm or yarn installed
 
-React 18
+MongoDB Atlas account (or local MongoDB instance)
 
-Tailwind CSS + Autoprefixer
+1. Clone the Project
+bash
+Copy
+Edit
+git clone https://github.com/your-username/virtual-book-house.git
+cd virtual-book-house
+2. Set Up the Frontend
+bash
+Copy
+Edit
+cd client
+npm install
+npm run dev
+The React app will start on http://localhost:5173
 
-Framer Motion – page & element animations
+3. Set Up the Backend
+bash
+Copy
+Edit
+cd server
+npm install
+Create a .env file in the server folder with the following:
 
-React Router v6 – client‑side routing
+ini
+Copy
+Edit
+PORT=3000
+MONGODB_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+Now run the backend server:
 
-Firebase v10 – auth 
+bash
+Copy
+Edit
+npm run dev
+The backend API will run on http://localhost:3000
 
-React Toastify – toast notifications
+🔐 Firebase Setup
+You must create a Firebase project at https://console.firebase.google.com, then:
 
-SweetAlert2 + with‑react‑content – modal confirmations
+Enable Email/Password and Google sign-in methods
 
-Lucide‑react – icon set
+Replace your Firebase config in the frontend (firebase.config.js) with your own project credentials
 
-Axios – HTTP client
+📱 Responsive Design
+Fully mobile-first and responsive, with optimized views for:
 
-Back‑End
+Smartphones
 
-Node.js 20
+Tablets
 
-🔑 Important NPM Packages
+Desktop
 
-Package
-
-Why we use it
-
-react-router-dom
-
-Routing & protected routes
-
-axios
-
-Simplified HTTP requests with interceptors for JWT
-
-framer-motion
-
-Smooth animations & page transitions
-
-react-toastify
-
-Non‑blocking toast notifications
-
-sweetalert2
-
-Elegant confirmation dialogs
-
-lucide-react
-
-Modern iconography
-
-firebase
-
-Auth & Google sign‑in
-
-jsonwebtoken
-
-Issue & verify access tokens on server
-
-Express 5
-
-MongoDB Atlas with Mongoose 8
-
-jsonwebtoken (JWT) – auth tokens
-
-cors, dotenv, cookie‑parser
