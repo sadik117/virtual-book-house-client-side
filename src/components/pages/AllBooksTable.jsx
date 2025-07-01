@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import BookCard from "../Shared/BookCard";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
-const Bookshelf = () => {
+const AllBooksTable = () => {
   const [books, setBooks] = useState([]);
   const [displayBooks, setDisplayBooks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -23,31 +23,21 @@ const Bookshelf = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  // Unique categories for filter dropdown
-  const categories = [
-    "All",
-    ...new Set(books.map((book) => book.book_category)),
-  ];
+  const categories = ["All", ...new Set(books.map((book) => book.book_category))];
 
-  // Handle filtering, search, and sort
   useEffect(() => {
     let filtered = [...books];
 
-    // Search
     if (searchTerm) {
       filtered = filtered.filter((book) =>
         book.book_title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    // Filter by category
     if (categoryFilter !== "All") {
-      filtered = filtered.filter(
-        (book) => book.book_category === categoryFilter
-      );
+      filtered = filtered.filter((book) => book.book_category === categoryFilter);
     }
 
-    // Sort
     if (sortOption === "title") {
       filtered.sort((a, b) => a.book_title.localeCompare(b.book_title));
     } else if (sortOption === "author") {
@@ -70,12 +60,14 @@ const Bookshelf = () => {
   return (
     <>
       <Helmet>
-        <title>Bookshelf</title>
+        <title>All Books</title>
       </Helmet>
+
       <h2 className="text-3xl font-semibold mb-8 mt-20 text-center">📚 Bookshelf</h2>
+
       <div className="w-[95%] max-w-7xl mx-auto my-10">
         {/* Controls */}
-        <div className="flex flex-col md:flex-row md:items-center gap-4 mb-8 justify-between">
+        <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6 justify-between">
           <input
             type="text"
             placeholder="Search by title..."
@@ -106,14 +98,51 @@ const Bookshelf = () => {
           </select>
         </div>
 
-        {/* Book Grid */}
+        {/* Table */}
         {displayBooks.length === 0 ? (
           <p className="text-center text-gray-500">No books found.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {displayBooks.map((book) => (
-              <BookCard key={book._id} book={book} />
-            ))}
+          <div className="overflow-x-auto rounded-lg shadow ring-1 ring-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 text-sm">
+              <thead className="bg-gray-100 text-gray-700 text-left">
+                <tr>
+                  <th className="px-4 py-3 font-semibold">Cover</th>
+                  <th className="px-4 py-3 font-semibold">Title</th>
+                  <th className="px-4 py-3 font-semibold">Author</th>
+                  <th className="px-4 py-3 font-semibold">Category</th>
+                  <th className="px-4 py-3 font-semibold text-center">Action</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 bg-white">
+                {displayBooks.map((book) => (
+                  <tr key={book._id} className="hover:bg-gray-50 transition duration-200">
+                    <td className="px-4 py-3">
+                      <img
+                        src={book.cover_photo}
+                        alt={book.book_title}
+                        className="w-14 h-20 object-cover rounded shadow"
+                      />
+                    </td>
+                    <td className="px-4 py-3 font-medium max-w-[180px] truncate" title={book.book_title}>
+                      {book.book_title}
+                    </td>
+                    <td className="px-4 py-3">{book.book_author}</td>
+                    <td className="px-4 py-3">
+                      <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                        {book.book_category}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <Link to={`/viewDetails/${book._id}`}>
+                        <button className="btn p-1 rounded-lg btn-sm bg-purple-500 text-white hover:bg-purple-600">
+                          See Details
+                        </button>
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
@@ -121,4 +150,4 @@ const Bookshelf = () => {
   );
 };
 
-export default Bookshelf;
+export default AllBooksTable;

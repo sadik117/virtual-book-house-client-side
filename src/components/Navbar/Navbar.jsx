@@ -21,7 +21,7 @@ export default function Navbar() {
   }
 
   return (
-    <nav className="bg-[#121829] text-white fixed top-0 w-full z-50 shadow-md">
+    <nav className="bg-[#121829] text-white fixed top-0 z-50 shadow-md mx-auto ml-2 md:ml-7 w-[95%] max-w-7xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="text-2xl flex font-bold text-blue-400">
@@ -34,7 +34,7 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-6 items-center font-medium">
           <Link to="/">Home</Link>
-          <Link to="/bookshelf">Bookshelf</Link>
+          {!user ? <Link to="/bookshelf">Bookshelf</Link> : <Link to="/all-books-table">All Books</Link>}         
           <Link to="/add-book">Add Book</Link>
           {user && <Link to="/my-books">My Books</Link>}
           {user && <Link to="/my-profile">My Profile</Link>}

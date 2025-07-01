@@ -49,7 +49,7 @@ const AddBook = () => {
       initial={{ opacity: 0, y: 40 }} 
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="max-w-full mx-auto p-8 bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-xl mt-10"
+      className="mx-auto ml-2 md:ml-7 w-[95%] max-w-7xl p-8 bg-gradient-to-br from-gray-800 to-gray-900 text-white shadow-xl mt-10 mb-5 rounded-b-xl"
     >
 
       <Helmet>

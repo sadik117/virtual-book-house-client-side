@@ -10,6 +10,7 @@ import PrivateRoute from "./PrivateRoute";
 import Bookshelf from "../pages/Bookshelf";
 import BookDetails from "../pages/BookDetails";
 import UserProfile from "../pages/UserProfile";
+import AllBooksTable from "../pages/AllBooksTable";
 
 export const router = createBrowserRouter([
   {
@@ -33,15 +34,10 @@ export const router = createBrowserRouter([
       {
         path: "/bookshelf",
         Component: Bookshelf,
-        hydrateFallbackElement: (
-          <p className="justify-center items-center mx-120 my-50">
-            <span className="loading loading-infinity loading-xs"></span>
-            <span className="loading loading-infinity loading-sm"></span>
-            <span className="loading loading-infinity loading-md"></span>
-            <span className="loading loading-infinity loading-lg"></span>
-            <span className="loading loading-infinity loading-xl"></span>
-          </p>
-        )
+      },
+      {
+        path: "/all-books-table",
+        Component: AllBooksTable
       },
       {
         path: "/add-book",

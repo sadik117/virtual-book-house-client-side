@@ -4,7 +4,7 @@ import { FcStatistics } from "react-icons/fc";
 
 export const Statistic = () => {
   return (
-    <div className="px-4 py-8 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-12">
+    <div className="px-4 py-8 mx-auto ml-2 md:ml-7 w-[95%] max-w-7xl md:px-24 lg:px-8 lg:py-12">
       <div className="text-center justify-center mb-6">
       <h2 className="font-bold text-3xl inline-flex gap-1"> <FcStatistics className="mt-1.5"></FcStatistics> App Statistic</h2>
       </div>

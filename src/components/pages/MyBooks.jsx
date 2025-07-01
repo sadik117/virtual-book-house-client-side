@@ -3,7 +3,6 @@ import { AuthContext } from "../Firebase/AuthProvider";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { motion } from "framer-motion";
 import { Heart, Pencil, Trash } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
@@ -19,17 +18,12 @@ const MyBooks = () => {
     const fetchBooks = async () => {
       if (user?.email) {
         const token = await user.getIdToken();
-
         const res = await fetch(
           `https://virtual-book-house.vercel.app/my-books?email=${user.email}`,
           {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
-
         const data = await res.json();
         setBooks(data);
       }
@@ -50,9 +44,12 @@ const MyBooks = () => {
     });
 
     if (result.isConfirmed) {
-      const res = await fetch(`https://virtual-book-house.vercel.app/books/${id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `https://virtual-book-house.vercel.app/books/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (res.ok) {
         toast.success("Book deleted successfully!");
@@ -76,11 +73,14 @@ const MyBooks = () => {
       book_overview: form.book_overview.value,
     };
 
-    const res = await fetch(`https://virtual-book-house.vercel.app/books/${editingBook._id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedBook),
-    });
+    const res = await fetch(
+      `https://virtual-book-house.vercel.app/books/${editingBook._id}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedBook),
+      }
+    );
 
     if (res.ok) {
       const updated = await res.json();
@@ -97,7 +97,6 @@ const MyBooks = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-4">
-
       <Helmet>
         <title>My Books</title>
       </Helmet>
@@ -106,56 +105,68 @@ const MyBooks = () => {
         📚 My Books
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {books.map((book) => (
-          <motion.div
-            key={book._id}
-            whileHover={{ scale: 1.03 }}
-            className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl overflow-hidden border border-gray-200 dark:border-gray-800 w-full max-w-sm mx-auto"
-          >
-            <img
-              src={book.cover_photo}
-              alt={book.book_title || "No Title"}
-              className="w-full h-72 object-cover"
-            />
-            <div className="p-5 space-y-2">
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white">
-                {book.book_title || "Untitled"}
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                By {book.book_author || "Unknown Author"}
-              </p>
-              <div className="flex items-center justify-between mt-3">
-                <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-600 font-medium">
-                  {book.book_category || "Uncategorized"}
-                </span>
-                <div className="flex items-center gap-1 text-teal-500 font-semibold">
-                  <Heart size={16} className="fill-teal-400" />
-                  {book.upvote}
-                </div>
-              </div>
-              <div className="flex gap-2 mt-4">
-                <button
-                  onClick={() => {
-                    setEditingBook(book);
-                    setShowModal(true);
-                  }}
-                  className="btn btn-sm p-1 rounded-sm bg-yellow-500 text-white hover:bg-yellow-600"
-                >
-                  <Pencil className="ml-4" size={16} /> Update
-                </button>
-                <button
-                  onClick={() => handleDelete(book._id)}
-                  className="btn btn-sm p-1 rounded-sm bg-red-600 text-white hover:bg-red-700"
-                >
-                  <Trash className="ml-4" size={16} /> Delete
-                </button>
-              </div>
-            </div>
-          </motion.div>
-        ))}
+      <div className="overflow-x-auto rounded-xl shadow ring-1 ring-gray-200">
+        <table className="min-w-full divide-y divide-gray-200 text-sm">
+          <thead className="bg-gray-100 text-gray-700 text-left">
+            <tr>
+              <th className="px-4 py-3">Cover</th>
+              <th className="px-4 py-3">Title</th>
+              <th className="px-4 py-3">Author</th>
+              <th className="px-4 py-3">Category</th>
+              <th className="px-4 py-3">Status</th>
+              <th className="px-4 py-3">Upvotes</th>
+              <th className="px-4 py-3 text-center">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-200 bg-white">
+            {books.map((book) => (
+              <tr key={book._id} className="hover:bg-gray-50 transition">
+                <td className="px-4 py-3">
+                  <img
+                    src={book.cover_photo}
+                    alt={book.book_title}
+                    className="w-14 h-20 object-cover rounded shadow"
+                  />
+                </td>
+                <td className="px-4 py-3 font-semibold">{book.book_title}</td>
+                <td className="px-4 py-3">{book.book_author}</td>
+                <td className="px-4 py-3">
+                  <span className="bg-blue-100 text-blue-800 px-2 py-0.5 rounded text-xs font-medium">
+                    {book.book_category}
+                  </span>
+                </td>
+                <td className="px-4 py-3">{book.reading_status}</td>
+                <td className="px-4 py-3 mt-7 text-orange-800 font-semibold flex items-center gap-1">
+                  <Heart size={16} className="fill-orange-800" /> {book.upvote}
+                </td>
+                <td className="px-4 py-3 text-center">
+                  <div className="flex flex-col sm:flex-row justify-center items-center gap-2">
+                    <button
+                      onClick={() => {
+                        setEditingBook(book);
+                        setShowModal(true);
+                      }}
+                      className="inline-flex items-center justify-center gap-1 px-3 py-1.5 text-sm font-medium rounded-md w-full sm:w-auto text-white bg-teal-500 hover:bg-teal-600 transition duration-200"
+                    >
+                      <Pencil size={16} />
+                      Update
+                    </button>
+                    <button
+                      onClick={() => handleDelete(book._id)}
+                      className="inline-flex items-center justify-center gap-1 px-3 py-1.5 text-sm font-medium rounded-md w-full sm:w-auto text-white bg-red-600 hover:bg-red-700 transition duration-200"
+                    >
+                      <Trash size={16} />
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
+      {/* Modal for editing */}
       {showModal && editingBook && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-blue-100 dark:bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-lg">

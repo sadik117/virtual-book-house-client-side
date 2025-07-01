@@ -1,37 +1,26 @@
 import { motion } from "framer-motion";
-import { Heart} from "lucide-react";
 import { Link } from "react-router";
 
- const BookCard = ({ book }) => {
-  const { book_title, cover_photo, book_author, book_category, upvote } = book;
+const BookCard = ({ book }) => {
+  const { _id, book_title, cover_photo, book_author, book_category } = book;
 
   return (
-  <Link to={`/viewDetails/${book._id}`}>
-    <motion.div
-      whileHover={{ scale: 1.03 }}
-      className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200 w-full max-w-sm mx-auto"
-    >
-      <img
-        src={cover_photo}
-        alt={book_title}
-        className="w-full h-80 object-cover"
-      />
-      <div className="p-5 space-y-2">
-        <h3 className="text-xl font-bold text-gray-800">{book_title}</h3>
-        <p className="text-sm text-gray-600">By {book_author}</p>
-        <div className="flex items-center justify-between mt-3">
-          <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-600 font-medium">
-            {book_category}
-          </span>
-          <div className="flex items-center gap-1 text-teal-500 font-semibold">
-            <Heart size={16} className="fill-teal-400" />
-            {upvote}
-          </div>
+    <div className="bg-white shadow-md rounded-xl overflow-hidden flex flex-col h-full">
+      <img src={cover_photo} alt={book_title} className="h-48 w-full object-cover" />
+      <div className="p-4 flex flex-col flex-grow">
+        <h3 className="text-lg font-semibold mb-1">{book_title}</h3>
+        <p className="text-sm text-gray-600 mb-1">By {book_author}</p>
+        <span className="inline-block px-2 py-2 text-xs bg-purple-100 text-blue-600 rounded w-max mb-3">{book_category}</span>
+        <div className="mt-auto">
+          <Link to={`/viewDetails/${_id}`}>
+            <button className="w-full bg-purple-500 text-white py-2 rounded hover:bg-purple-600 transition">
+              See Details
+            </button>
+          </Link>
         </div>
       </div>
-    </motion.div>
-  </Link>
+    </div>
   );
-}
+};
 
-export default BookCard
+export default BookCard;

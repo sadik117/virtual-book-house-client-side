@@ -33,7 +33,7 @@ export default function BannerSlider() {
   }, []);
 
   return (
-    <div className="relative w-full h-[700px] overflow-hidden">
+    <div className="relative mt-14 mx-auto rounded-b-xl ml-2 md:ml-7 w-[95%] max-w-7xl h-[380px] overflow-hidden">
       <AnimatePresence>
         <motion.div
           key={slides[current].id}

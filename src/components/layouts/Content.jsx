@@ -3,7 +3,7 @@ import { BookOpen } from "lucide-react";
 
 export const Content = () => {
   return (
-    <div className="px-4 py-6 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-8 border-b-3 border-purple-300 rounded-b-xl">
+    <div className="px-4 py-6 mx-auto ml-2 md:ml-7 w-[95%] max-w-7xl md:px-24 lg:px-8 lg:py-8 border-b-3 border-purple-300 rounded-b-xl">
       <div className="grid gap-10 lg:grid-cols-2">
         {/* Text Content */}
         <div className="flex flex-col justify-center md:pr-8 xl:pr-0 lg:max-w-lg">

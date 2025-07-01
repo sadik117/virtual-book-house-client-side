@@ -314,7 +314,7 @@ const BookDetails = () => {
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="btn p-1 rounded-lg bg-amber-500 text-white hover:bg-amber-600"
+                className="btn p-1 rounded-lg bg-teal-500 text-white hover:bg-teal-600"
               >
                 {userReview ? "Update Review" : "Post Review"}
               </button>

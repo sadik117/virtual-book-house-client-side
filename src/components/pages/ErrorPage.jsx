@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
 import { motion } from "framer-motion";
 import animationData from "../../../public/error-animation.json";
+import { Helmet } from "react-helmet-async";
 
 const ErrorPage = () => {
   return (
