@@ -11,6 +11,9 @@ import Bookshelf from "../pages/Bookshelf";
 import BookDetails from "../pages/BookDetails";
 import UserProfile from "../pages/UserProfile";
 import AllBooksTable from "../pages/AllBooksTable";
+import Terms from "../pages/Terms";
+import ContactUs from "../pages/ContactUs";
+import AboutUs from "../pages/AboutUs";
 
 export const router = createBrowserRouter([
   {
@@ -101,6 +104,18 @@ export const router = createBrowserRouter([
             Component: Registration,
           },
         ],
+      },
+      {
+        path: "/terms",
+        Component: Terms
+      },
+      {
+        path: "/about-us",
+        Component: AboutUs
+      },
+      {
+        path: "/contact-us",
+        Component: ContactUs
       },
     ],
   },

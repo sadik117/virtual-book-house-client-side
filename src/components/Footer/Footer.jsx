@@ -7,9 +7,9 @@ import { MdDeveloperBoard } from "react-icons/md";
 export default function Footer() {
   return (
     <footer className="bg-[#0f172a] text-white py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 lg:px-18 ml-0 md:ml-10 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Logo & Name */}
-        <div className="flex flex-col items-start">
+        <div className="flex flex-col items-start mt-0 md:-mt-7 ">
           <div className="w-full md:w-1/2">
             <Lottie animationData={bookAnimation} loop={true} />
           </div>
@@ -19,13 +19,6 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Contact Info */}
-        <div>
-          <h3 className="text-lg font-semibold mb-3">Contact</h3>
-          <p>Email: support@virtualbookshelf.com</p>
-          <p>Phone: +880 123 456 789</p>
-          <p>Address: Rajshahi, Bangladesh</p>
-        </div>
 
         {/* Useful Links */}
         <div>
@@ -37,12 +30,12 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link to="/privacy" className="hover:underline text-white/80">
-                Privacy Policy
+              <Link to="/about-us" className="hover:underline text-white/80">
+                About Us
               </Link>
             </li>
             <li>
-              <Link to="/contact" className="hover:underline text-white/80">
+              <Link to="/contact-us" className="hover:underline text-white/80">
                 Contact Us
               </Link>
             </li>

@@ -63,7 +63,7 @@ const AllBooksTable = () => {
         <title>All Books</title>
       </Helmet>
 
-      <h2 className="text-3xl font-semibold mb-8 mt-20 text-center">📚 Bookshelf</h2>
+      <h2 className="text-3xl font-semibold mb-8 mt-20 text-center">📚 All Books</h2>
 
       <div className="w-[95%] max-w-7xl mx-auto my-10">
         {/* Controls */}

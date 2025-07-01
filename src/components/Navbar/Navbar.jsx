@@ -28,7 +28,7 @@ export default function Navbar() {
         <div className="w-10 h-8">
             <Lottie animationData={bookAnimation} loop={true} className="-mt-1"/>
           </div>
-          <span className="text-white">Book</span>shelf.
+          <span className="text-white">Book</span> <span className="ml-1"> House </span>
         </Link>
         
         {/* Desktop Menu */}
