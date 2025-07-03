@@ -86,7 +86,7 @@ MongoDB Atlas account (or local MongoDB instance)
 bash
 Copy
 Edit
-git clone https://github.com/your-username/virtual-book-house.git
+git clone https://github.com/sadik117/virtual-book-house-client-side
 cd virtual-book-house
 2. Set Up the Frontend
 bash
