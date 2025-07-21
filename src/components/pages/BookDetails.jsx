@@ -19,43 +19,43 @@ const BookDetails = () => {
   const [reviewText, setReviewText] = useState("");
 
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const token = await user?.getIdToken();
+    const fetchData = async () => {
+      try {
+        const token = await user?.getIdToken();
+        const bookRes = await fetch(
+          `https://virtual-book-house.vercel.app/books/${id}?email=${user.email}`,
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        const bookData = await bookRes.json();
+        setBook(bookData);
 
-      const bookRes = await fetch(`https://virtual-book-house.vercel.app/books/${id}?email=${user.email}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const bookData = await bookRes.json();
-      setBook(bookData);
+        const reviewRes = await fetch(
+          `https://virtual-book-house.vercel.app/reviews?bookId=${id}`
+        );
+        const reviewData = await reviewRes.json();
+        setReviews(reviewData);
 
-      const reviewRes = await fetch(`https://virtual-book-house.vercel.app/reviews?bookId=${id}`);
-      const reviewData = await reviewRes.json();
-      setReviews(reviewData);
+        const existing = reviewData.find((r) => r.userEmail === user?.email);
+        setUserReview(existing || null);
+        setReviewText(existing?.comment || "");
+      } catch (err) {
+        console.error("Error fetching book or reviews:", err);
+        toast.error("Failed to load book details.");
+      }
+    };
 
-      const existing = reviewData.find((r) => r.userEmail === user?.email);
-      setUserReview(existing || null);
-      setReviewText(existing?.comment || "");
-    } catch (err) {
-      console.error("Error fetching book or reviews:", err);
-      toast.error("Failed to load book details.");
-    }
-  };
-
-  if (user) fetchData();
-}, [id, user]);
-
+    if (user) fetchData();
+  }, [id, user]);
 
   const handleUpvote = async () => {
     if (user?.email === book.user_email) {
       toast.warn("You cannot upvote your own book.");
       return;
     }
-    const res = await fetch(`https://virtual-book-house.vercel.app/books/${id}/upvote`, {
-      method: "PATCH",
-    });
+    const res = await fetch(
+      `https://virtual-book-house.vercel.app/books/${id}/upvote`,
+      { method: "PATCH" }
+    );
     const data = await res.json();
     setBook(data);
     toast.success("Thanks for your upvote!");
@@ -109,9 +109,7 @@ const BookDetails = () => {
     if (confirm.isConfirmed) {
       const res = await fetch(
         `https://virtual-book-house.vercel.app/reviews/${userReview._id}`,
-        {
-          method: "DELETE",
-        }
+        { method: "DELETE" }
       );
       if (res.ok) {
         setReviews(reviews.filter((r) => r._id !== userReview._id));
@@ -133,16 +131,18 @@ const BookDetails = () => {
     if (!nextStatus) return;
 
     try {
-      const res = await fetch(`https://virtual-book-house.vercel.app/books/${id}/status`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          newStatus: nextStatus,
-          userEmail: user.email,
-        }),
-      });
+      const res = await fetch(
+        `https://virtual-book-house.vercel.app/books/${id}/status`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            newStatus: nextStatus,
+            userEmail: user.email,
+          }),
+        }
+      );
 
-      // Avoid parsing empty response
       const contentType = res.headers.get("content-type");
       if (!res.ok) {
         const errorData =
@@ -164,7 +164,6 @@ const BookDetails = () => {
     }
   };
 
-  // Rendering logic outside of any function
   if (!book) {
     return (
       <div className="flex justify-center items-center my-20">
@@ -175,109 +174,126 @@ const BookDetails = () => {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-10 text-gray-800 dark:text-gray-100">
-
-    <Helmet>
-      <title>Book Details</title>
-    </Helmet>
+      <Helmet>
+        <title>Book Details</title>
+      </Helmet>
 
       <h2 className="mt-10 mb-8 text-center text-3xl text-black font-bold">
         📚 Book Details
       </h2>
+
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="bg-white dark:bg-gray-900 mt-10 rounded-2xl shadow-md overflow-hidden mb-10"
       >
-        <img
-          src={book.cover_photo}
-          alt={book.book_title}
-          className="w-full h-fit object-cover"
-        />
-        <div className="p-6 space-y-3">
-          <h1 className="text-3xl font-bold">{book.book_title}</h1>
-          <p className="text-purple-800 dark:text-gray-300 font-bold">
-            Author: {book.book_author}
-          </p>
-          <p>Pages: {book.total_page}</p>
-          <p>Category: {book.book_category}</p>
-          <p>
-            Status: <span className="font-semibold text-purple-600">{book.reading_status}</span>
-          </p>
+          <img
+            src={book.cover_photo}
+            alt={book.book_title}
+            className="object-cover w-full h-full"
+          />
 
-          {/* Reading Tracker */}
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="mt-2"
-          >
-            <p className="font-medium mb-1">📊 Reading Progress</p>
-            <div className="flex items-center gap-2">
-              {["Want-to-Read", "Reading", "Read"].map((status, index) => {
-                const isActive = book.reading_status === status;
-                const isCompleted =
-                  ["Reading", "Read"].includes(book.reading_status) &&
-                  (status === "Want-to-Read" ||
-                    (book.reading_status === "Read" && status === "Reading"));
-
-                return (
-                  <div key={status} className="flex items-center gap-1">
-                    <div
-                      className={`w-6 h-6 rounded-full text-xs flex items-center justify-center font-bold
-              ${
-                isActive
-                  ? "bg-blue-600 text-white"
-                  : isCompleted
-                  ? "bg-blue-300 text-white"
-                  : "bg-gray-300 text-gray-700"
-              }
-            `}
-                      title={status}
-                    >
-                      {index + 1}
-                    </div>
-                    {index < 2 && (
-                      <div
-                        className={`w-8 h-1 ${
-                          isCompleted ? "bg-blue-400" : "bg-gray-300"
-                        }`}
-                      ></div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </motion.div>
-
-          {user?.email?.toLowerCase() === book?.user_email?.toLowerCase() &&
-            getNextStatus(book.reading_status) && (
-              <button
-                onClick={handleStatusUpdate}
-                className="btn btn-outline btn-sm mt-2 p-1 rounded-md bg-sky-500 text-white hover:bg-sky-600"
-              >
-                Mark as {getNextStatus(book.reading_status)}
-              </button>
-            )}
-
-          <p>{book.book_overview}</p>
-          <p className="font-semibold text-purple-800">
-            Added by: {book.user_name} ({book.user_email})
-          </p>
-
-          <div className="flex items-center gap-4 mt-4">
-            {user && user.email !== book.user_email && (
-              <button
-                onClick={handleUpvote}
-                className="btn flex items-center bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg gap-2"
-              >
-                <HeartPulse />
-                <span>Upvote</span>
-              </button>
-            )}
-            <p className="text-lg font-semibold text-purple-600 inline-flex gap-1">
-              <HeartIcon className="mt-1" /> {book.upvote}{" "}
-              {book.upvote === 1 ? "person" : "people"} upvoted
+        <div className="min-h-screen w-full bg-white relative">
+          <div
+            className="absolute inset-0 z-0"
+            style={{
+              backgroundImage: `
+                radial-gradient(circle 200px at 20% 60%, rgba(139,92,246,0.3), transparent),
+                radial-gradient(circle 200px at 60% 20%, rgba(59,130,246,0.3), transparent)
+              `,
+              backgroundSize: "48px 48px, 48px 48px, 100% 100%, 100% 100%",
+            }}
+          />
+          <div className="p-6 space-y-3">
+            <h1 className="text-3xl font-bold">{book.book_title}</h1>
+            <p className="text-purple-800 dark:text-gray-300 font-bold">
+              Author: {book.book_author}
             </p>
+            <p>Pages: {book.total_page}</p>
+            <p>Category: {book.book_category}</p>
+            <p>
+              Status:{" "}
+              <span className="font-semibold text-purple-600">
+                {book.reading_status}
+              </span>
+            </p>
+
+            {/* Reading Progress Tracker */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4 }}
+              className="mt-2"
+            >
+              <p className="font-medium mb-1">📊 Reading Progress</p>
+              <div className="flex items-center gap-2">
+                {["Want-to-Read", "Reading", "Read"].map((status, index) => {
+                  const isActive = book.reading_status === status;
+                  const isCompleted =
+                    ["Reading", "Read"].includes(book.reading_status) &&
+                    (status === "Want-to-Read" ||
+                      (book.reading_status === "Read" && status === "Reading"));
+
+                  return (
+                    <div key={status} className="flex items-center gap-1">
+                      <div
+                        className={`w-6 h-6 rounded-full text-xs flex items-center justify-center font-bold
+                          ${
+                            isActive
+                              ? "bg-blue-600 text-white"
+                              : isCompleted
+                              ? "bg-blue-300 text-white"
+                              : "bg-gray-300 text-gray-700"
+                          }
+                        `}
+                        title={status}
+                      >
+                        {index + 1}
+                      </div>
+                      {index < 2 && (
+                        <div
+                          className={`w-8 h-1 ${
+                            isCompleted ? "bg-blue-400" : "bg-gray-300"
+                          }`}
+                        ></div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+
+            {user?.email?.toLowerCase() ===
+              book?.user_email?.toLowerCase() &&
+              getNextStatus(book.reading_status) && (
+                <button
+                  onClick={handleStatusUpdate}
+                  className="btn btn-outline btn-sm mt-2 p-1 rounded-md bg-sky-500 text-white hover:bg-sky-600"
+                >
+                  Mark as {getNextStatus(book.reading_status)}
+                </button>
+              )}
+
+            <p>{book.book_overview}</p>
+            <p className="font-semibold text-purple-800">
+              Added by: {book.user_name} ({book.user_email})
+            </p>
+
+            <div className="flex items-center gap-4 mt-4">
+              {user && user.email !== book.user_email && (
+                <button
+                  onClick={handleUpvote}
+                  className="btn flex items-center bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg gap-2"
+                >
+                  <HeartPulse />
+                  <span>Upvote</span>
+                </button>
+              )}
+              <p className="text-lg font-semibold text-purple-600 inline-flex gap-1">
+                <HeartIcon className="mt-1" /> {book.upvote}{" "}
+                {book.upvote === 1 ? "person" : "people"} upvoted
+              </p>
+            </div>
           </div>
         </div>
       </motion.div>
