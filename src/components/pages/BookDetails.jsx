@@ -191,7 +191,7 @@ const BookDetails = () => {
         <img
           src={book.cover_photo}
           alt={book.book_title}
-          className="w-full h-96 object-cover"
+          className="w-full h-fit object-cover"
         />
         <div className="p-6 space-y-3">
           <h1 className="text-3xl font-bold">{book.book_title}</h1>
