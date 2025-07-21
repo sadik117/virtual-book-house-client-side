@@ -195,13 +195,13 @@ const BookDetails = () => {
         />
         <div className="p-6 space-y-3">
           <h1 className="text-3xl font-bold">{book.book_title}</h1>
-          <p className="text-blue-800 dark:text-gray-300 font-medium">
+          <p className="text-purple-800 dark:text-gray-300 font-bold">
             Author: {book.book_author}
           </p>
           <p>Pages: {book.total_page}</p>
           <p>Category: {book.book_category}</p>
           <p>
-            Status: <span className="font-semibold">{book.reading_status}</span>
+            Status: <span className="font-semibold text-purple-600">{book.reading_status}</span>
           </p>
 
           {/* Reading Tracker */}
@@ -260,7 +260,7 @@ const BookDetails = () => {
             )}
 
           <p>{book.book_overview}</p>
-          <p>
+          <p className="font-semibold text-purple-800">
             Added by: {book.user_name} ({book.user_email})
           </p>
 
@@ -268,13 +268,13 @@ const BookDetails = () => {
             {user && user.email !== book.user_email && (
               <button
                 onClick={handleUpvote}
-                className="btn flex items-center bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-lg gap-2"
+                className="btn flex items-center bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg gap-2"
               >
                 <HeartPulse />
                 <span>Upvote</span>
               </button>
             )}
-            <p className="text-lg font-semibold text-teal-600 inline-flex gap-1">
+            <p className="text-lg font-semibold text-purple-600 inline-flex gap-1">
               <HeartIcon className="mt-1" /> {book.upvote}{" "}
               {book.upvote === 1 ? "person" : "people"} upvoted
             </p>
@@ -314,7 +314,7 @@ const BookDetails = () => {
             <div className="flex gap-2">
               <button
                 type="submit"
-                className="btn p-1 rounded-lg bg-teal-500 text-white hover:bg-teal-600"
+                className="btn p-1 rounded-lg bg-purple-500 text-white hover:bg-purple-600"
               >
                 {userReview ? "Update Review" : "Post Review"}
               </button>
@@ -322,7 +322,7 @@ const BookDetails = () => {
                 <button
                   type="button"
                   onClick={handleReviewDelete}
-                  className="btn btn-error bg-red-600 text-white hover:bg-red-700 p-1 rounded-sm"
+                  className="btn btn-error bg-red-600 text-white hover:bg-red-700 p-1 rounded-lg"
                 >
                   Delete Review
                 </button>
