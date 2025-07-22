@@ -34,7 +34,7 @@ const ContactUs = () => {
                 type="text"
                 name="name"
                 required
-                className="w-full input input-bordered dark:bg-gray-700"
+                className="w-full input input-bordered border-1 dark:bg-gray-700"
               />
             </div>
 
@@ -44,7 +44,7 @@ const ContactUs = () => {
                 type="email"
                 name="email"
                 required
-                className="w-full input input-bordered dark:bg-gray-700"
+                className="w-full input input-bordered border-1 dark:bg-gray-700"
               />
             </div>
 
@@ -54,7 +54,7 @@ const ContactUs = () => {
                 name="message"
                 rows="5"
                 required
-                className="w-full textarea textarea-bordered dark:bg-gray-700"
+                className="w-full textarea textarea-bordered border-1 dark:bg-gray-700"
               />
             </div>
 

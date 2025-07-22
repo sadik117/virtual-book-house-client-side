@@ -6,6 +6,10 @@ import { router } from './components/router/Routes';
 import AuthProvider from './components/Firebase/AuthProvider';
 import { ToastContainer } from 'react-toastify';
 import { HelmetProvider } from 'react-helmet-async';
+import 'aos/dist/aos.css';
+import AOS from 'aos';
+
+AOS.init();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -168,7 +168,7 @@ const BookDetails = () => {
   if (!book) {
     return (
       <div className="flex justify-center items-center my-20">
-        <span className="loading loading-infinity loading-lg"></span>
+        <p className="loading loading-infinity loading-lg"></p>
       </div>
     );
   }

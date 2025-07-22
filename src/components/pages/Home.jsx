@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import BannerSlider from "../layouts/BannerSlider";
 import PopularBooks from "../layouts/PopularBooks";
 import { motion } from "framer-motion";
@@ -22,6 +24,13 @@ const Home = () => {
     },
   };
 
+  useEffect(() => {
+    AOS.init({
+      duration: 800,
+      once: true,
+    });
+  }, []);
+
   return (
     <motion.div
       initial="initial"
@@ -33,9 +42,7 @@ const Home = () => {
         <title>Home</title>
       </Helmet>
 
-      {/*  Added Gradient Background Wrapper */}
       <div className="min-h-screen w-full bg-white relative">
-        {/*  Dual Gradient Overlay Background */}
         <div
           className="absolute inset-0 z-0"
           style={{
@@ -49,13 +56,26 @@ const Home = () => {
           }}
         />
 
-        {/*  Home Page Content */}
         <div className="relative z-10 space-y-10">
-          <BannerSlider />
-          <PopularBooks />
-          <FeaturedBooks />
-          <Content />
-          <Statistic />
+          <div data-aos="zoom-in-up">
+            <BannerSlider />
+          </div>
+
+          <div data-aos="zoom-in-up" data-aos-delay="100">
+            <PopularBooks />
+          </div>
+
+          <div data-aos="zoom-in-up" data-aos-delay="200">
+            <FeaturedBooks />
+          </div>
+
+          <div data-aos="zoom-in-up" data-aos-delay="300">
+            <Content />
+          </div>
+
+          <div data-aos="zoom-in-up" data-aos-delay="400">
+            <Statistic />
+          </div>
         </div>
       </div>
     </motion.div>

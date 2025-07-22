@@ -13,7 +13,7 @@ export default function Footer() {
           <div className="w-full md:w-1/2">
             <Lottie animationData={bookAnimation} loop={true} />
           </div>
-          <h2 className="text-xl font-bold">Virtual Bookshelf</h2>
+          <h2 className="text-xl font-bold">Virtual Book House</h2>
           <p className="text-sm text-white/70 mt-2">
             Your personal reading companion.
           </p>
@@ -55,7 +55,7 @@ export default function Footer() {
       </div>
 
       <div className="text-start ml-4 md:ml-0 md:text-center text-sm text-white/60 mt-6 md:mt-2">
-        © {new Date().getFullYear()} Virtual Bookshelf. All rights reserved.
+        © {new Date().getFullYear()} Virtual Book House. All rights reserved.
       </div>
       <div className="text-start ml-4 md:ml-0 md:text-center text-sm text-white/60 mt-6 md:mt-2">
         <MdDeveloperBoard className="inline -mt-0.5"></MdDeveloperBoard> Developed by Sadik Sourov.
