@@ -43,6 +43,8 @@ Lucide-react
 
 Axios
 
+AOS
+
 🔸 Back-End
 Node.js v20
 
